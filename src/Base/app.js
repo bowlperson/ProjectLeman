@@ -1,18 +1,30 @@
 import { Client, GatewayIntentBits, Partials } from "discord.js";
-const client = new Client({
-  intents: Object.values(GatewayIntentBits),
-  partials: Object.values(Partials),
-  shards: "auto",
-});
 import { readdirSync } from "node:fs";
 import config from "../base/config.js";
 
-const token = config.token;
+class BaseClient {
+  constructor(token) {
+    this.client = new Client({
+      intents: Object.values(GatewayIntentBits),
+      partials: Object.values(Partials),
+      shards: "auto",
+    });
+    this.token = token;
+  }
 
-readdirSync("./src/Handlers").forEach(async (file) => {
-  const handlerFile = await import(`../Handlers/${file}`);
-  const handler = handlerFile.default;
-  handler.execute(client);
-});
+  loadHandlers() {
+    readdirSync("./src/Handlers").forEach(async (file) => {
+      const handlerFile = await import(`../Handlers/${file}`);
+      const handler = handlerFile.default;
+      handler.execute(this.client);
+    });
+  }
 
-client.login(token);
+  start() {
+    this.loadHandlers();
+    this.client.login(this.token);
+  }
+}
+
+const client = new BaseClient(config.token);
+client.start();
