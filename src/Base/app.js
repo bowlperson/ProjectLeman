@@ -26,5 +26,6 @@ class BaseClient {
   }
 }
 
-const client = new BaseClient(config.token);
+const token = config.token;
+const client = new BaseClient(token);
 client.start();
