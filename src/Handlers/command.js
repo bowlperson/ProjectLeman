@@ -9,11 +9,11 @@ export default {
     client.slashDatas = [];
 
     // - Handlers -
-    const commandFolders = await readdirSync("./src/Commands");
+    const commandFolders = readdirSync("./src/Commands");
 
     await Promise.all(
       commandFolders.map(async (category) => {
-        const commandFiles = await readdirSync(`./src/Commands/${category}`);
+        const commandFiles = readdirSync(`./src/Commands/${category}`);
 
         await Promise.all(
           commandFiles.map(async (file) => {
@@ -26,7 +26,7 @@ export default {
                   const prefixCommand = commands.commandBase;
                   client.commands.set(
                     prefixCommand.prefixData.name,
-                    prefixCommand,
+                    prefixCommand
                   );
 
                   if (
@@ -36,7 +36,7 @@ export default {
                     prefixCommand.prefixData.aliases.forEach((alias) => {
                       client.commandAliases.set(
                         alias,
-                        prefixCommand.prefixData.name,
+                        prefixCommand.prefixData.name
                       );
                     });
                   }
@@ -49,13 +49,13 @@ export default {
                 client.slashDatas.push(slashCommand.slashData.toJSON());
                 client.slashCommands.set(
                   slashCommand.slashData.name,
-                  slashCommand,
+                  slashCommand
                 );
               }
             }
-          }),
+          })
         );
-      }),
+      })
     );
   },
 };

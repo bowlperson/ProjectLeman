@@ -1,5 +1,5 @@
 import { Collection, Events, InteractionType } from "discord.js";
-import config from "../base/config.js";
+import config from "../Base/config.js";
 const cooldown = new Collection();
 
 export default {
@@ -32,7 +32,9 @@ export default {
                 nowDate;
               return interaction
                 .reply({
-                  content: `Cooldown is currently active, please try again <t:${Math.floor(new Date(nowDate + waitedDate).getTime() / 1000)}:R>.`,
+                  content: `Cooldown is currently active, please try again <t:${Math.floor(
+                    new Date(nowDate + waitedDate).getTime() / 1000
+                  )}:R>.`,
                   ephemeral: true,
                 })
                 .then(() =>
@@ -40,8 +42,8 @@ export default {
                     () => interaction.deleteReply(),
                     cooldown.get(`${command.name}-${interaction.user.id}`) -
                       Date.now() +
-                      1000,
-                  ),
+                      1000
+                  )
                 );
             }
 
@@ -49,7 +51,7 @@ export default {
 
             cooldown.set(
               `${command.name}-${interaction.user.id}`,
-              Date.now() + command.cooldown,
+              Date.now() + command.cooldown
             );
 
             setTimeout(() => {
