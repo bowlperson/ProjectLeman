@@ -3,9 +3,10 @@
     "start": "node src/Base/app.js"
   },
   "type": "module",
+  "author": "memte.",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^14.19.3",
+    "discord.js": "^14.21.0",
     "dotenv": "^16.5.0",
     "fs": "^0.0.2",
     "winston": "^3.17.0"
