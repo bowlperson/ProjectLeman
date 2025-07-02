@@ -1,5 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
+import "@dotenvx/dotenvx/config";
 
 export default {
   prefix: "!",
