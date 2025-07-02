@@ -11,6 +11,9 @@
     "fs": "^0.0.2",
     "winston": "^3.17.0"
   },
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.45.1"
+  },
   "engines": {
     "node": ">=18"
   }
