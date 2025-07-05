@@ -1,7 +1,7 @@
 # Example Discord Bot Handler - V14
 
 - **Project built on `discord.js` v14.**
-- **Minimum required Node.js version: v16.11.**
+- **Minimum required Node.js version: v18**
 - **Example command setup can be found in [`src/Commands/info/ping.js`](https://github.com/memte/ExampleBot/blob/v14/src/Commands/info/ping.js).**  
   For more details, visit the [Discord.js Guide](https://discordjs.guide/slash-commands/advanced-creation.html).
 
