@@ -26,7 +26,7 @@ export default {
                   const prefixCommand = commands.commandBase;
                   client.commands.set(
                     prefixCommand.prefixData.name,
-                    prefixCommand
+                    prefixCommand,
                   );
 
                   if (
@@ -36,7 +36,7 @@ export default {
                     prefixCommand.prefixData.aliases.forEach((alias) => {
                       client.commandAliases.set(
                         alias,
-                        prefixCommand.prefixData.name
+                        prefixCommand.prefixData.name,
                       );
                     });
                   }
@@ -49,13 +49,13 @@ export default {
                 client.slashDatas.push(slashCommand.slashData.toJSON());
                 client.slashCommands.set(
                   slashCommand.slashData.name,
-                  slashCommand
+                  slashCommand,
                 );
               }
             }
-          })
+          }),
         );
-      })
+      }),
     );
   },
 };
