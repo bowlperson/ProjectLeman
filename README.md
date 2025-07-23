@@ -5,7 +5,17 @@
 - **Example command setup can be found in [`src/Commands/info/ping.js`](https://github.com/memte/ExampleBot/blob/v14/src/Commands/info/ping.js).**  
   For more details, visit the [Discord.js Guide](https://discordjs.guide/slash-commands/advanced-creation.html).
 
-- **Note: Remember to configure your settings in the [`config.js`](https://github.com/memte/ExampleBot/blob/v14/src/Base/config.js) file and Don't forget to prepare a .env file in the same way as in [`.env.example`](https://github.com/memte/ExampleBot/blob/v14/.env.example)**!
+- **Note: Remember to configure your settings in the [`config.js`](https://github.com/memte/ExampleBot/blob/v14/src/Base/config.js) file and don't forget to prepare a `.env` file similar to [`.env.example`](https://github.com/memte/ExampleBot/blob/v14/.env.example)**!
+
+## Setup
+
+1. Copy `.env.example` to `.env` and provide your configuration values:
+   - `BOT_TOKEN` – Discord bot token
+   - `MONGO_URI` – MongoDB connection string
+   - `MONGO_DB` – database name
+   - `CLIENT_ID` *(optional)* – required only if you register commands without logging in
+
+The client ID is automatically derived from the token when the bot starts, so it's generally not needed unless you use a manual deployment script.
 
 ## Star History
 

@@ -1,12 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { addJob } from "../../Managers/reminderManager.js";
 import { getTimezone } from "../../Managers/timezone.js";
-
-function parseDate(input) {
-  const ts = Date.parse(input);
-  if (!isNaN(ts)) return new Date(ts);
-  return null;
-}
+import { parseDateString } from "../../Utils/timeUtils.js";
 
 export const commandBase = {
   slashData: new SlashCommandBuilder()
@@ -18,7 +13,7 @@ export const commandBase = {
     const desc = interaction.options.getString("description");
     const dueStr = interaction.options.getString("due");
     const tz = await getTimezone(interaction.user.id);
-    const due = parseDate(dueStr, tz);
+    const due = parseDateString(dueStr, tz);
     if (!due) {
       return interaction.reply({ content: "Could not parse due date.", ephemeral: true });
     }

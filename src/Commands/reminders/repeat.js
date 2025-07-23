@@ -1,32 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { addJob } from "../../Managers/reminderManager.js";
 import { getTimezone } from "../../Managers/timezone.js";
-
-function nextFromRule(rule) {
-  const now = new Date();
-  if (rule.startsWith("every day")) {
-    const time = rule.split("at")[1].trim();
-    const [h, m] = time.split(":").map(Number);
-    const next = new Date(now);
-    next.setHours(h, m, 0, 0);
-    if (next <= now) next.setDate(next.getDate() + 1);
-    return next;
-  }
-  if (rule.startsWith("every")) {
-    const parts = rule.split(" ");
-    const day = parts[1].toLowerCase();
-    const time = parts[3];
-    const [h, m] = time.split(":").map(Number);
-    const next = new Date(now);
-    const dow = ["sun","mon","tue","wed","thu","fri","sat"].indexOf(day);
-    let diff = dow - next.getDay();
-    if (diff <= 0) diff += 7;
-    next.setDate(next.getDate() + diff);
-    next.setHours(h, m, 0, 0);
-    return next;
-  }
-  return null;
-}
+import { nextFromRule } from "../../Utils/timeUtils.js";
 
 export const commandBase = {
   slashData: new SlashCommandBuilder()
@@ -38,7 +13,7 @@ export const commandBase = {
     const message = interaction.options.getString("message");
     const rule = interaction.options.getString("rule");
     const tz = await getTimezone(interaction.user.id);
-    const next = nextFromRule(rule, tz);
+    const next = nextFromRule(rule, new Date(), tz);
     if (!next) {
       return interaction.reply({ content: "Could not parse rule.", ephemeral: true });
     }

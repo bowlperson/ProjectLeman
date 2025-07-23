@@ -1,4 +1,5 @@
 import { connect } from "../Base/database.js";
+import { nextFromRule } from "../Utils/timeUtils.js";
 
 const timers = new Map();
 
@@ -39,7 +40,7 @@ async function executeJob(client, job) {
   }
 
   if (job.repeatRule) {
-    const next = computeNext(job.repeatRule, new Date(job.remindAt));
+    const next = nextFromRule(job.repeatRule, new Date(job.remindAt));
     if (next) {
       await db.collection("jobs").updateOne(
         { _id: job._id },
@@ -56,29 +57,6 @@ async function executeJob(client, job) {
   );
 }
 
-function computeNext(rule, date) {
-  // very naive rule parser: daily|weekly|monthly at HH:MM
-  const parts = rule.split(" ");
-  if (parts[0] === "daily") {
-    const [h, m] = parts[2].split(":").map(Number);
-    const next = new Date(date);
-    next.setDate(next.getDate() + 1);
-    next.setHours(h, m, 0, 0);
-    return next;
-  }
-  if (parts[0] === "weekly") {
-    const weekday = parts[1];
-    const [h, m] = parts[3].split(":").map(Number);
-    const next = new Date(date);
-    const dayOfWeek = ["sun","mon","tue","wed","thu","fri","sat"].indexOf(weekday.toLowerCase());
-    let diff = dayOfWeek - next.getDay();
-    if (diff <= 0) diff += 7;
-    next.setDate(next.getDate() + diff);
-    next.setHours(h, m, 0, 0);
-    return next;
-  }
-  return null;
-}
 
 export function cancelJob(id) {
   const timer = timers.get(id);
