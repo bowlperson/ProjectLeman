@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import { readdirSync } from "node:fs";
 import config from "./config.js";
+import { loadPending } from "../Managers/scheduler.js";
 
 class BaseClient {
   constructor(token) {
@@ -22,6 +23,9 @@ class BaseClient {
 
   start() {
     this.loadHandlers();
+    this.client.once('ready', () => {
+      loadPending(this.client);
+    });
     this.client.login(this.token);
   }
 }
